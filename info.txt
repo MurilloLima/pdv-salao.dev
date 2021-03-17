@@ -1,0 +1,16 @@
+HOSTINGER
+user: jayrosystem@gmail.com
+pass: shutdown8600
+
+
+BANCO MYSQL
+link acesso: https://auth-db137.hostinger.com.br/?_ga=2.115754502.122898450.1615380936-1369276721.1615380936
+host: sql137.main-hosting / 31.170.161.43
+banco: u645027791_testesalao
+user: u645027791_testesalao 
+pass: Bruno.2020
+
+FTP
+Host: ftp.testesistema.tech
+user: u645027791.testesistema
+pass: Bruno.2020
