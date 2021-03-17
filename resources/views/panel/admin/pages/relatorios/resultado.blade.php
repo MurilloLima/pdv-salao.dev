@@ -103,6 +103,62 @@ Relatório
                         <!-- /.card-body -->
                     </div>
                     <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Relatório vendas produtos</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>UID</th>
+                                        <th>Produto</th>
+                                        <th>Valor</th>
+                                        <th>Desconto</th>
+                                        <th>Data</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($products as $item)
+                                    <tr>
+                                        <td>{{$item->uid}}</td>
+                                        <td>{{$item->name}}</td>
+                                        <td>{{number_format($item->valor, 2, ',', '.')}}</td>
+                                        <td>{{number_format($item->desc, 2, ',', '.')}}</td>
+                                        <td>{{date('d/m/Y', strtotime($item->created_at))}}</td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="9" class="text-center">Nenhum produto encontrado!!!</td>
+                                    </tr>
+                                    @endforelse
+                                    <tr>
+                                        {{-- <td colspan="9" class="text-right">
+                                            @if (count($data) >= 1)
+                                            <h5>
+                                                Total dinheiro: R$:
+                                                {{number_format($data->sum('valor_dinheiro'), 2,',','.')}} <br>
+
+                                        Total cartão: R$:
+                                        {{number_format($data->sum('valor_cartao'), 2,',','.')}} <br>
+
+                                        Total dinheiro/Cartão: R$:
+                                        {{number_format($dinheiroCartao->sum('total'), 2,',','.')}}
+                                        </h5>
+                                        @else
+
+                                        @endif
+
+                                        </td> --}}
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <!-- /.card-body -->
+                    </div>
+                    <div class="card">
                         <div class="card-body table-responsive p-0">
                             <div class="card-header">
                                 <h3 class="card-title">Contas pagas</h3>

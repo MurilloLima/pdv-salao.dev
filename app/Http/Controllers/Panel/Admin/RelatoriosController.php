@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Account;
 use App\Models\AccountHistory;
+use App\Models\Cart;
 use App\Models\Cliente;
+use App\Models\FinishCart;
 use App\Models\Servico;
 use App\Models\Ticket;
 use App\User;
@@ -42,7 +44,8 @@ class RelatoriosController extends Controller
             'payment' => 'Dinheiro/Cartão'
         ])->whereDate('created_at', $request->get('day'))->get();
         $data = Ticket::where('status', 'finalizado')->whereDate('created_at', $request->get('day'))->get();
-        return view('panel.admin.pages.relatorios.resultado', compact('data', 'dinheiro', 'cartao', 'dinheiroCartao', 'contasPagas', 'contasRecebidas'));
+        $products = Cart::whereMonth('created_at', $request->get('month'))->get();
+        return view('panel.admin.pages.relatorios.resultado', compact('data', 'dinheiro', 'cartao', 'dinheiroCartao', 'contasPagas', 'contasRecebidas', 'products'));
     }
 
     public function month(Request $request)
@@ -63,7 +66,8 @@ class RelatoriosController extends Controller
             'payment' => 'Dinheiro/Cartão'
         ])->whereMonth('created_at', $request->get('month'))->get();
         $data = Ticket::where('status', 'finalizado')->whereMonth('created_at', $request->get('month'))->get();
-        return view('panel.admin.pages.relatorios.resultado', compact('data', 'dinheiro', 'cartao', 'dinheiroCartao', 'contasPagas', 'contasRecebidas'));
+        $products = Cart::whereMonth('created_at', $request->get('month'))->get();
+        return view('panel.admin.pages.relatorios.resultado', compact('data', 'dinheiro', 'cartao', 'dinheiroCartao', 'contasPagas', 'contasRecebidas', 'products'));
     }
 
     public function year(Request $request)
@@ -84,7 +88,8 @@ class RelatoriosController extends Controller
             'payment' => 'Dinheiro/Cartão'
         ])->whereYear('created_at', $request->get('year'))->get();
         $data = Ticket::where('status', 'finalizado')->whereYear('created_at', $request->get('year'))->get();
-        return view('panel.admin.pages.relatorios.resultado', compact('data', 'dinheiro', 'cartao', 'dinheiroCartao', 'contasPagas', 'contasRecebidas'));
+        $products = Cart::whereYear('created_at', $request->get('year'))->get();
+        return view('panel.admin.pages.relatorios.resultado', compact('data', 'dinheiro', 'cartao', 'dinheiroCartao', 'contasPagas', 'contasRecebidas', 'products'));
     }
 
     public function personalizado(Request $request)
@@ -109,6 +114,7 @@ class RelatoriosController extends Controller
 
         $data = Ticket::where('status', 'finalizado')->whereDate('created_at', '>=', $date_start)->whereDate('created_at', '<=', $date_end)->get();
 
-        return view('panel.admin.pages.relatorios.resultado', compact('data', 'dinheiro', 'cartao', 'dinheiroCartao', 'contasPagas', 'contasRecebidas'));
+        $products = Cart::whereDate('created_at', '>=', $date_start)->whereDate('created_at', '<=', $date_end)->get();
+        return view('panel.admin.pages.relatorios.resultado', compact('data', 'dinheiro', 'cartao', 'dinheiroCartao', 'contasPagas', 'contasRecebidas', 'products'));
     }
 }

@@ -36,7 +36,7 @@ Produtos
                             <div class="card-tools">
                                 <a href="{{ route('admin.product.create') }}" class="btn btn-primary">
                                     <i class="nav-icon fa fa-plus"></i> Add novo</a>
-                                <a href="{{ route('admin.products.list') }}" class="btn btn-dark">
+                                <a href="{{ route('admin.product.search') }}" class="btn btn-dark">
                                     <i class="nav-icon fa fa-plus"></i> Nova venda</a>
                             </div>
                         </div>
@@ -50,6 +50,7 @@ Produtos
                                         <th>descrição</th>
                                         <th>Valor</th>
                                         <th>Qtd Estoque</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>

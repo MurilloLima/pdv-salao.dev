@@ -41,7 +41,7 @@
         @endphp
         <!-- Messages Dropdown Menu -->
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('panel.cart.index') }}">
+            <a class="nav-link" href="{{ route('admin.product.search') }}">
                 <i class="fa fa-shopping-cart"></i>
                 <span class="badge badge-dark navbar-badge">{{count($cart) ?? '0'}}</span>
             </a>

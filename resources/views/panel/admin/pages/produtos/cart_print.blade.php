@@ -1,82 +1,78 @@
-@extends('panel.includes.app',['activePage' => 'admin.product.index'])
+<!DOCTYPE html>
+<html lang="pt-br">
 
-@section('title')
-Venda de produto finalizada
-@endsection
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{$cart->uid}}</title>
+    <style>
+        * {
+            color: black;
+            background: white;
+            font-family: 'Courier New', Courier, monospace;
+        }
 
-@section('content')
-<section class="content">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">venda finalizada</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Carrinho</a></li>
-                        <li class="breadcrumb-item active">Venda de produto finalizada</li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+        table {
+            font-size: 80%;
+        }
+
+        table,
+        th,
+        td {
+            border: 0px;
+            width: 100%;
+            text-align: right;
+        }
+
+        .header {
+            text-align: left;
+        }
+
+        .header h4,
+        p {
+            text-align: left;
+            padding: 2px;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h4>Venda de produtos</h4>
+        <p>UID: {{$cart->uid}}</p>
+        <p>Data:{{date('d/m/Y H:i:s', strtotime($cart->created_at))}}</p>
     </div>
-    <!-- /.content-header -->
+    <hr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Produto</th>
+                <th>Qtd</th>
+                <th>Valor</th>
+                <th>Desconto</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($data as $item)
+            <tr>
+                <td>{{$item->id}}</td>
+                <td>{{$item->product->name}}</td>
+                <td>{{$item->qtd}}</td>
+                <td>R$ {{$item->valor}}</td>
+                <td> R$ {{$item->desc}}</td>
+            </tr>
+            @endforeach
+            <tr>
+                <td colspan="5" class="text-right">
+                    <h4><strong>Total: R$ {{number_format($total, 2, ',', '.')}}</strong></h4>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-    {{-- content --}}
-    <div class="section">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    @include('panel.includes.alerts')
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">UID: <strong>#{{$uid}}</strong></h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body table-responsive p-0">
-                            <table class="table table-hover text-nowrap">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Produto</th>
-                                        <th>Qtd</th>
-                                        <th>Valor</th>
-                                        <th>Desconto</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse ($data as $item)
-                                    <tr>
-                                        <td>{{$item->id}}</td>
-                                        <td>{{$item->product->name}}</td>
-                                        <td>{{$item->qtd}}</td>
-                                        <td>R$ {{$item->valor}}</td>
-                                        R$ {{$item->desc}}
-                                    </tr>
-                                    @empty
-                                    <tr>
-                                        <td colspan="4" class="text-center">Nenhum produto encontrado!!!</td>
-                                    </tr>
+</body>
 
-                                    @endforelse
-                                    <tr>
-                                        <td colspan="4" class="text-right">
-                                            <h4><strong>Total: R$ {{number_format($total, 2, ',', '.')}}</strong></h4>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
-                    <!-- /.card -->
-                </div>
-            </div>
-        </div>
-    </div>
-    {{-- end content --}}
-</section>
-@endsection
+</html>

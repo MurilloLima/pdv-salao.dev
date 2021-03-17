@@ -29,15 +29,16 @@ class CartController extends Controller
         $request->session()->forget('cart');
 
         $data = Cart::where('uid', $cart->uid)->get();
-        $total = $data->sum('valor');
-
-        $pdf = PDF::loadView('panel.admin.pages.produtos.cart_print', [
+        $total = $data->sum('valor') - $data->sum('desc');
+        $desconto = $data->sum('desc');
+        return PDF::loadView('panel.admin.pages.produtos.cart_print', [
             'data' => $data,
+            'desconto' => $desconto,
             'total' => $total,
-            'uid' => $cart->uid
-        ]);
-        // return $pdf->stream('invoice.pdf');
-        return $pdf->download('ticket.pdf');
+            'cart' => $cart
+        ])->stream();
+       
+        // return $pdf->download('product.pdf');
     }
 
     public function deleteItem($id)

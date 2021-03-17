@@ -6,9 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Models\Cart;
-use App\Models\Iten;
 use App\Models\Product;
-use Illuminate\Support\Facades\Session;
 use Keygen\Keygen;
 
 class ProductController extends Controller
@@ -60,9 +58,14 @@ class ProductController extends Controller
     }
     public function search(Request $request)
     {
+        $cart = Cart::where('uid', $request->session()->get('cart'))->get();
+        $total = $cart->sum('valor') - $cart->sum('desc');
+        $desconto = $cart->sum('desc');
+
         $value = $request->get('value');
-        $data = Product::where('name', 'like', '%' . $value . '%')->paginate(50);
-        return view('panel.admin.pages.produtos.search', compact('data'));
+        $data = Product::where('name', 'like', '%' . $value . '%')->paginate(10);
+
+        return view('panel.admin.pages.produtos.search', compact('data', 'cart', 'total', 'desconto'));
     }
 
     /**
@@ -106,12 +109,10 @@ class ProductController extends Controller
     public function addItem($id, Request $request)
     {
         $product = Product::find($id);
-
-
+        if ($product->qtd <= 0 || $request->get('qtd') > $product->qtd) {
+            return redirect()->back()->with('error', 'Confira a quantidade de item em estoque!');
+        }
         if ($request->session()->has('cart')) {
-            if ($product->qtd <= 0) {
-                return redirect()->back()->with('error', 'Quantidade em estoque zero (0)!');
-            }
             $qtd = $request->get('qtd');
             if ($qtd <= 0) {
                 return redirect()->back()->with('error', 'Informe a quantidade!');
@@ -139,10 +140,5 @@ class ProductController extends Controller
             ]);
             return redirect()->back()->with('success', 'Produto adicionado ao carrinho com sucesso!');
         }
-    }
-
-    public function check()
-    {
-        # code...
     }
 }
