@@ -59,6 +59,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::get('cart/', 'Panel\Admin\CartController@index')->name('panel.cart.index');
     Route::get('cart/delete/item/{id}', 'Panel\Admin\CartController@deleteItem')->name('panel.cart.delete.item');
     Route::get('cart/finalizar/', 'Panel\Admin\CartController@finalizar')->name('panel.cart.finalizar');
+    Route::get('cart/print/{cart}', 'Panel\Admin\CartController@print')->name('panel.cart.print');
     
 
 });

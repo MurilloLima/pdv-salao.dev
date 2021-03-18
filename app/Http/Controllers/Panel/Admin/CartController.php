@@ -27,18 +27,22 @@ class CartController extends Controller
             'status' => 'finalizado'
         ]);
         $request->session()->forget('cart');
+        return view('panel.admin.pages.produtos.print', compact('cart'));
+    }
 
-        $data = Cart::where('uid', $cart->uid)->get();
+    public function print($cart)
+    {
+        $uid = Cart::where('uid', $cart)->first();
+        $data = Cart::where('uid', $cart)->get();
         $total = $data->sum('valor') - $data->sum('desc');
         $desconto = $data->sum('desc');
+
         return PDF::loadView('panel.admin.pages.produtos.cart_print', [
+            'uid' => $uid,
             'data' => $data,
             'desconto' => $desconto,
-            'total' => $total,
-            'cart' => $cart
+            'total' => $total
         ])->stream();
-       
-        // return $pdf->download('product.pdf');
     }
 
     public function deleteItem($id)

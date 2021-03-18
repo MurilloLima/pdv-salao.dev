@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{$cart->uid}}</title>
+    <title>Imprimir venda: {{$uid->uid}}</title>
     <style>
         * {
             color: black;
@@ -41,8 +41,8 @@
 <body>
     <div class="header">
         <h4>Venda de produtos</h4>
-        <p>UID: {{$cart->uid}}</p>
-        <p>Data:{{date('d/m/Y H:i:s', strtotime($cart->created_at))}}</p>
+        <p>UID: {{$uid->uid}}</p>
+        <p>Data:{{date('d/m/Y H:i:s', strtotime($uid->created_at))}}</p>
     </div>
     <hr>
     <table class="table">
@@ -62,7 +62,7 @@
                 <td>{{$item->product->name}}</td>
                 <td>{{$item->qtd}}</td>
                 <td>R$ {{$item->valor}}</td>
-                <td> R$ {{$item->desc}}</td>
+                <td>R$ {{$item->desc}}</td>
             </tr>
             @endforeach
             <tr>

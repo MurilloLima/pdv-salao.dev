@@ -41,7 +41,15 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        Product::create($request->all());
+        $source = array('.', ',');
+        $replace = array('', '.');
+        $valor = str_replace($source, $replace, $request->get('valor'));
+        Product::create([
+            'name' => $request->get('name'),
+            'desc' => $request->get('desc'),
+            'qtd' => $request->get('qtd'),
+            'valor' => $valor,
+        ]);
         return redirect()->back()->with('success', 'Cadastrado com sucesso!');
     }
 
@@ -90,7 +98,15 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $data = Product::find($id);
-        $data->update($request->all());
+        $source = array('.', ',');
+        $replace = array('', '.');
+        $valor = str_replace($source, $replace, $request->get('valor'));
+        $data->update([
+            'name' => $request->get('name'),
+            'desc' => $request->get('desc'),
+            'qtd' => $request->get('qtd'),
+            'valor' => $valor,
+        ]);
         return redirect()->back()->with('success', 'Editado com sucesso!');
     }
 
